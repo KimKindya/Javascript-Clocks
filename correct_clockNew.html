@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+  </head>
+
+  <body>
+    <div id="clock"></div>
+
+    <script>
+      $(document).ready(function() {
+        function startTime() {
+          var today = new Date();
+          var h = today.getHours();
+          var m = today.getMinutes();
+          var s = today.getSeconds();
+
+          m = checkTime(m);
+          s = checkTime(s);
+
+          $("#clock").text(h + ":" + m + ":" + s);
+
+          setTimeout(startTime, 1000);
+        }
+
+        function checkTime(i) {
+          if (i < 10) {
+            i = "0" + i;
+          }
+
+          return i;
+        }
+
+        function changeFontSize() {
+          var currentFontSize = $("body").css("fontSize");
+
+          if (currentFontSize === "12px") {
+            $("body").css("fontSize", "20px");
+          } else {
+            $("body").css("fontSize", "12px");
+          }
+          
+          setTimeout(changeFontSize, 3000); // 3 seconds
+        }
+
+        function changeFontColor() {
+          var currentFontColor = $("body").css("color");
+
+          if (currentFontColor === "rgb(0, 0, 0)") {
+            $("body").css("color", "red");
+          } else {
+            $("body").css("color", "black");
+          }
+
+          setTimeout(changeFontColor, 10000); // 10 seconds
+        }
+
+        startTime(); // manages the clock
+        changeFontSize(); // changes the font size
+        changeFontColor(); // changes the font color
+      });
+    </script>
+  </body>
+</html>

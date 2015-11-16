@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <style> 
+      #clock {
+        font-size:40px;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h1> The Pink and Blue Javascript Digital Clock </h1>
+    <div id="clock"></div>
+
+    <script>
+      $(document).ready(function() {
+
+        function getTime() {
+          var date = new Date();
+          var h = date.getHours();
+          var m = date.getMinutes();
+          var s = date.getSeconds();
+          
+
+
+          // background color changes at odd even minute
+          body = backgroundChange(m);
+
+
+
+          h = noMilitaryTime(h);
+          h = formatValue(h);
+          m = formatValue(m);
+          s = formatValue(s);
+
+          $("#clock").html(h + ":" + m + ":" + s );
+
+          setTimeout(getTime, 1000);
+        }
+
+
+        function noMilitaryTime(value) {
+          if (value > 12) {
+            return value - 12;
+          } else {
+            return value;
+          }
+        }
+
+        function formatValue(value) {
+          if (value < 10) {
+            return "0" + value;
+          } else {
+            return value;
+          }
+        }
+
+
+// Changes background color at odd and even minutes
+        function backgroundChange(value) {
+          if (value % 2 === 0) {
+              return $("body").css("background-color","pink")
+          } else {
+            return $("body").css("background-color","aqua")
+          }
+      }
+
+     
+        getTime();
+
+      });
+
+
+
+    </script>
+  </body>
+</html>

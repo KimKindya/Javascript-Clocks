@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <!-- This tells the script to link to the jquery library as indicated-->
+    <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+  </head>
+
+  <body>
+    <!-- This tells the script to link to the jquery library as indicated-->
+    <div id="clock"></div>
+
+    <script>
+    // Document Ready function makes sure page loads all HTML elements before running the scripts
+      $(document).ready(function() {
+
+
+        //function that tells JQuery to retrieve time information as basis for clock
+        // Setup of variables and anonymous functions for the digits of the clock
+
+        function startTime() {
+          var today = new Date();
+          var h = today.getHours();
+          var m = today.getMinutes();
+          var s = today.getSeconds();
+
+
+
+          // invokes clock helper function
+          // return i command below brings the variables back here to return them to their original state after the checkTime function below alters them, so the variables can be used again
+
+          m = checkTime(m);
+          s = checkTime(s);
+
+          //invokes function to change clock background color
+
+          body = backgroundChange(m);
+
+
+          // command below says to write in the HTML element id called "Clock" the value in the argument (between the parentheses)
+          // parentheses hold the order in which the clock digits will display as text, with strings -- the semicolons -- between them
+
+          $("#clock").text(h + ":" + m + ":" + s);
+
+
+          // command below runs the function every second. Otherwise the whole page would have to be refreshed/re-loaded every second to get the functions to run
+          
+          setTimeout(startTime, 1000);
+        }
+
+
+        // clock helper function that adjusts the format of single digit numbers in minutes and seconds to have a digit of "0" in front of them. 
+        // i is a stand in variable for whatever you pass in as an argument for CheckTime
+        function checkTime(i) {
+          if (i < 10) {
+            i = "0" + i;
+          }
+
+        // this refers i back to m=CheckTime(m) and s = CheckTime(s) above to refresh variable for next iteration of function
+          return i;
+        }
+
+// This marks the end of the functions that run the digital clock alone. 
+
+// checkTime should NOT be nested with the functions below
+
+// Below are the "special effects" of the clock function per the problems set in the homework
+
+
+        // Changes background color at odd and even minutes by checking to see if the value of the time is divisible by 2 (ie if by dividing it by 2 it renders a 0 remainder)
+        function backgroundChange(value) {
+          if (value % 2 === 0) {
+              return $("body").css("background-color","pink")
+          } else {
+            return $("body").css("background-color","aqua")
+          }
+      }
+
+    
+
+        // This function alternates the font size every 5th second.  
+        // currentFontSize is a variable that represents the size of the font displayed by the clock
+        function changeFontSize() {
+          var currentFontSize = $("body").css("fontSize");
+
+          if (currentFontSize === "12px") {
+            $("body").css("fontSize", "20px");
+          } else {
+            $("body").css("fontSize", "12px");
+          }
+        
+
+          // below, the setTimeout Function runs every 3 seconds (3000 milliseconds). 
+          // As per the variable above, every 3rd second the font should display at 12 pixels. 
+          // The logic above checks whether the current font size is 12 pixels. If it is not (every non-5th second) THEN it should default to 20px. 
+            
+          setTimeout(changeFontSize, 3000); // 3 seconds
+        }
+
+
+        // New function: this alternates the COLOR of the font every 10th second.  
+        // currentFontColor is a variable that represents the color of the font displayed by the clock
+
+        function changeFontColor() {
+          var currentFontColor = $("body").css("color");
+
+          if (currentFontColor === "rgb(0, 0, 0)") {
+            $("body").css("color", "red");
+          } else {
+            $("body").css("color", "black");
+          }
+
+
+
+        // below, the setTimeout Function runs every 10 seconds (10000 milliseconds). 
+        // As per the variable above, every 10th second the font should display in the color red. 
+        // The logic above checks whether the current font color is red. If it is not (every non-10th second) THEN it should default to black. 
+
+          setTimeout(changeFontColor, 10000); // 10 seconds
+        }
+
+
+// the functions are invoked or "called" below.
+   
+        startTime(); // invokes the function to run the clock itself
+
+
+        // these two functions are independent of each other and the clock function, so we need to invoke them separately
+        changeFontSize(); // changes the font size
+        changeFontColor(); // changes the font color
+
+
+
+      });
+    </script>
+  </body>
+</html>

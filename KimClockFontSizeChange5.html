@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <style> 
+       h1 {
+        font-size:40px;
+       }
+    </style>
+  </head>
+
+
+
+  <body>
+    <h1> The Font-Changing Javascript Digital Clock </h1>
+
+
+    <div id="clock"></div>
+
+    <script>
+      $(document).ready(function() {
+
+        //Tells JQuery to retrieve this information -- hours, minutes, seconds
+         function getTime() {
+          var date = new Date();
+          var h = date.getHours();
+          var m = date.getMinutes();
+          var s = date.getSeconds();
+
+          // formatting of each variable that comprises digits of clock
+          h = noMilitaryTime(h);
+          h = formatValue(h);
+
+          m = formatValue(m);
+          s = formatValue(s);
+
+      
+
+        // Here is where the functions are called; the change in the background color, font size and font color
+
+          backgroundChange(m);
+          changeSize(s);
+        
+
+
+    
+         // tells the html to write the clock elements to this div
+          $("#clock").html(h + ":" + m + ":" + s );
+
+        // tells javascript to retrieve time every second for display 
+          setTimeout(getTime, 1000);
+        };
+
+
+        // Formats hour digits so that instead of military time it shows traditional 12 hour clock
+        function noMilitaryTime(value) {
+          if (value > 12) {
+            return value - 12;
+          } else {
+            return value;
+          }
+        };
+
+        // Formats single digit numbers so there is a 0 before them in display
+        function formatValue(value) {
+          if (value < 10) {
+            return "0" + value;
+          } else {
+            return value;
+          }
+        };     
+
+
+
+
+      // the following are the "special effects" for the clock
+
+      // Changes background color at odd and even minutes
+        function backgroundChange(value) {
+          if (value % 2 === 0) {
+              return $("body").css("background-color","pink");
+          } else {
+            return $("body").css("background-color","aqua");
+          }
+      }
+
+       // This is an anonymous function 
+        getTime();
+
+        
+     // Sets up function and its logic to change the font size whenever the seconds are divisible by 5. If the seconds are not divisible by 5 go to default font size. 
+        function changeSize(value) {
+          if (value % 5 === 0) {
+            return $("body").css("font-size","20px");
+          } else {
+            return $("body").css("font-size","100px");        
+          }
+
+          setTimeout(changeSize,5000)
+
+        };
+        
+              });
+
+        
+
+
+    </script>
+  </body>
+</html>
